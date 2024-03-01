@@ -73,3 +73,14 @@ public static class Search {
         return 1 + SearchSorted2(data, target, start, middle - 1);
     }
 }
+
+/* 
+What is the performance using big O notation for each function (based on both your predictions and the actual results)?
+    SearchSorted1: O(n) - Linear time complexity.
+    SearchSorted2: O(log n) - Logarithmic time complexity.
+
+Which function has the better performance in the worst case?
+    In the worst case SearchSorted2 is more efficient than SearchSorted1
+    This is evident in the provided results where the time values for SearchSorted2 increase at a much slower 
+    rate than SearchSorted1 as the size of the input increases.
+*/

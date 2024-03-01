@@ -39,7 +39,26 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        // Plan:
+        // 1. Initialize a List<double> to store the multiples.
+        // 2. Use a loop to generate multiples of the given 'number'.
+        //    - Multiply 'number' by the current iteration index to get each multiple.
+        //    - Add each multiple to the list.
+        // 3. Convert the List<double> to an array before returning it.
+
+        // Initialize a list to store the multiples
+        List<double> multiplesList = new List<double>();
+
+        // Use a loop to generate multiples
+        for (int i = 0; i < length; i++)
+        {
+            // Calculate the current multiple and add it to the list
+            double currentMultiple = number * (i + 1);
+            multiplesList.Add(currentMultiple);
+        }
+
+        // Convert the list to an array before returning
+        return multiplesList.ToArray();
     }
     
     /// <summary>
@@ -57,5 +76,22 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
+        // Plan:
+        // 1. Validate that the amount is within the range [1, data.Count].
+        // 2. Use the List<T> method InsertRange to rotate the list to the right.
+        //    - Remove the last 'amount' elements from the end of the list.
+        //    - Insert those removed elements at the beginning of the list.
+
+        // Validate that the amount is within the range [1, data.Count]
+        if (amount < 1 || amount > data.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "Amount must be in the range [1, data.Count].");
+        }
+
+        // Use InsertRange to rotate the list to the right
+        int lastIndex = data.Count - 1;
+        List<int> rotatedElements = data.GetRange(lastIndex - amount + 1, amount);
+        data.RemoveRange(lastIndex - amount + 1, amount);
+        data.InsertRange(0, rotatedElements);
     }
 }

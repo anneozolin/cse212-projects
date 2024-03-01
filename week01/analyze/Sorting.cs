@@ -25,3 +25,5 @@ public static class Sorting {
         }
     }
 }
+
+//  Big O notation == O(n^2)

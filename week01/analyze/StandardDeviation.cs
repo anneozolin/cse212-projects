@@ -72,3 +72,16 @@ public static class StandardDeviation {
         return Math.Sqrt(variance);
     }
 }
+
+// StandardDeviation1 has a time complexity of O(n).
+// StandardDeviation2 has a time complexity of O(n^2).
+// StandardDeviation3 has a time complexity of O(n).
+
+/* 
+O(1) - Constant time complexity (best performance).
+O(log n) - Logarithmic time complexity.
+O(n) - Linear time complexity.
+O(n log n) - Linearithmic time complexity.
+O(n^2) - Quadratic time complexity.
+O(2^n) - Exponential time complexity (worst performance).
+*/ 
