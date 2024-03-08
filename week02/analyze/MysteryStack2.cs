@@ -57,3 +57,16 @@ public static class MysteryStack2 {
         return stack.Pop();
     }
 }
+
+/*
+Determine the result of the function if the following inputs were provided:
+5 3 7 + *
+6 2 + 5 3 - /
+
+Input: "5 3 7 + *"
+Output = 5 * (3 + 7) = 50
+
+Input: "6 2 + 5 3 - /"
+Output = (6 + 2) / (5 - 3) = 4
+
+*/

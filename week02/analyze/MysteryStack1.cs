@@ -21,3 +21,18 @@ public static class MysteryStack1 {
         return result;
     }
 }
+
+/*
+This method takes a string input, reverses the characters and returns the reversed string.
+
+Determine the output of the function if the input text is equal to the following:
+
+Input: racecar
+Output: racecar
+
+Input: stressed
+Output: desserts 
+
+Input: a nut for a jar of tuna
+Output: anut fo raj a rof tun a
+*/
