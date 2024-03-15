@@ -111,6 +111,16 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        var set = new HashSet<String>();
+
+        foreach(var word in words){
+            var reverse = new string(word.Reverse().ToArray());
+            if (set.Contains(reverse)) {
+                Console.WriteLine($"{word} & {reverse}");
+            } else {
+                set.Add(word);
+            }
+        }
     }
 
     /// <summary>
@@ -132,6 +142,12 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3]; // Assuming the degree is in the 4th column
+            if (degrees.ContainsKey(degree)) {
+                degrees[degree]++;
+            } else {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -158,7 +174,18 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // Remove spaces and convert to lowercase
+        string cleanWord1 = word1.Replace(" ", "").ToLower();
+        string cleanWord2 = word2.Replace(" ", "").ToLower();
+
+        // Sort the characters
+        char[] sortedWord1 = cleanWord1.ToCharArray();
+        Array.Sort(sortedWord1);
+        char[] sortedWord2 = cleanWord2.ToCharArray();
+        Array.Sort(sortedWord2);
+
+        // Compare the sorted characters
+        return new string(sortedWord1) == new string(sortedWord2);
     }
 
     /// <summary>
@@ -235,5 +262,11 @@ public static class SetsAndMapsTester {
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+
+        foreach (var feature in featureCollection.Features) {
+            var place = feature.Properties.Place;
+            var magnitude = feature.Properties.Mag;
+            Console.WriteLine($"{place} - Mag {magnitude}");
+        }
     }
 }
