@@ -1,4 +1,4 @@
-﻿public static class DisplaySums {
+﻿﻿public static class DisplaySums {
     public static void Run() {
         DisplaySumPairs(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
         // Should show something like (order does not matter):
@@ -29,5 +29,14 @@
     /// <param name="numbers">array of integers</param>
     private static void DisplaySumPairs(int[] numbers) {
         // TODO Problem 2 - This should print pairs of numbers in the given array
+
+        HashSet<int> checkedNum = new HashSet<int>();
+
+        foreach(int num in numbers){
+            if(checkedNum.Contains(10 - num)){
+                 Console.WriteLine($"{num} {10 - num}");
+            }
+            checkedNum.Add(num);
+        }
     }
 }
