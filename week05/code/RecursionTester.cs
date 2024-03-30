@@ -147,7 +147,16 @@ public static class RecursionTester {
     /// </summary>
     public static int SumSquaresRecursive(int n) {
         // TODO Start Problem 1
-        return 0;
+        //base case: if n <= 0, return 0
+        if (n <= 0)
+        {
+            return 0;
+        }
+        //recursive case: 
+        else
+        {
+            return SumSquaresRecursive(n - 1) + n * n;
+        }
     }
 
     /// <summary>
@@ -171,6 +180,17 @@ public static class RecursionTester {
     /// </summary>
     public static void PermutationsChoose(string letters, int size, string word = "") {
         // TODO Start Problem 2
+        //base case:
+        if (size == 0)
+        {
+            Console.WriteLine(word);
+            return;
+        }
+        //recursive case:
+        for (int i = 0; i < letters.Length; i++)
+        {
+            PermutationsChoose(letters.Substring(0, i) + letters.Substring(i + 1), size - 1, word + letters[i]);
+        }
     }
 
     /// <summary>
@@ -218,20 +238,35 @@ public static class RecursionTester {
     /// The last test case is commented out because it will not work
     /// until the memoization is implemented.
     /// </summary>
-    public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null) {
-        // Base Cases
-        if (s == 0)
-            return 0;
-        if (s == 1)
-            return 1;
-        if (s == 2)
-            return 2;
-        if (s == 3)
-            return 4;
+    public static long CountWaysToClimb(int s, Dictionary<int, long>? remember = null) {
+        //initialize the memorization dictionary
+        if (remember == null)
+        {
+            remember = new Dictionary<int, long>();
+        }
 
-        // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
+        //if the number of stairs is less then 0, there are no ways to climb
+        if (s < 0)
+        {
+            return 0;
+        }
+        //if the number of stairs is 0, there is one way to climb
+        else if (s == 0)
+        {
+            return 1;
+        }
+        //if the number os ways to climb this number os stairs is already in the dictionary, return the stored value
+        else if (remember.ContainsKey(s))
+        {
+            return remember[s];
+        }
+        else
+        {
+            long ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+            remember[s] = ways;
+            return ways;
+        }
+
     }
 
     /// <summary>
@@ -249,13 +284,24 @@ public static class RecursionTester {
     /// </summary>
     public static void WildcardBinary(string pattern) {
         // TODO Start Problem 4
+        //base case:
+        if (!pattern.Contains('*'))
+        {
+            Console.WriteLine(pattern);
+            return;
+        }
+        //recursive case:
+        int index = pattern.IndexOf('*');
+        WildcardBinary(pattern[..index] + '0' + pattern[(index + 1)..]);
+        WildcardBinary(pattern[..index] + '1' + pattern[(index + 1)..]);
     }
 
     /// <summary>
     /// Use recursion to Print all paths that start at (0,0) and end at the
     /// 'end' square.
     /// </summary>
-    public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null) {
+    public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null) 
+    {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
         if (currPath == null)
@@ -266,6 +312,36 @@ public static class RecursionTester {
         // TODO Start Problem 5
         // ADD CODE HERE
 
-        // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
+        //add the current position to the path
+        currPath.Add((x, y));
+
+        //if the current position is the end of the maze, print the current path
+        if (maze.IsEnd(x, y))
+        {
+            Console.WriteLine(string.Join(" -> ", currPath.Select(p => $"({p.Item1}, {p.Item2})")));
+        }
+        //otherwise, try to move to each of the neighboring positions
+        else
+        {
+            //list of the possible moves (up, down, left, right)
+            List<(int, int)> moves = new() { (-1, 0), (1, 0), (0, -1), (0, 1) };
+
+            foreach (var move in moves)
+            {
+                int newX = x + move.Item1;
+                int newY = y + move.Item2;
+
+                //if moving to the new position is a valid move, recursively solve the maze from the new position
+                if (maze.IsValidMove(currPath, newX, newY))
+                {
+                    SolveMaze(maze, newX, newY, currPath);
+                }
+            }
+        }
+
+        //remove the current position from the path to backtrack
+        currPath.RemoveAt(currPath.Count - 1);
+
+        //Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
     }
 }
